@@ -1,5 +1,8 @@
+import sys
 import time
+import os
 
+#slownik ruchow
 RUCHY = {
     '\u253C': [(-1,0), (1,0), (0,-1), (0,1)], 
     '\u2502': [(-1,0), (1,0)],                
@@ -19,25 +22,60 @@ RUCHY = {
     '\u0020': []                              
 }
 
-plik_mapy = "maze1.txt"
-start, koniec = (0, 0), (19, 19) 
-algorytm = "DFS" 
+#sciezka mapki
+if len(sys.argv) > 1:
+    plik_mapy = sys.argv[1]
+else:
+    plik_mapy = input("Podaj nazwę pliku z mapą (np. maze1.txt): ")
 
-with open(plik_mapy, 'r', encoding='utf-8') as f:
-    mapa = [list(linia.strip('\n')) for linia in f]
+#czytanie mapki
+try:
+    with open(plik_mapy, 'r', encoding='utf-8') as f:
+        mapa = [list(linia.strip('\n')) for linia in f]
+except FileNotFoundError:
+    print("Nie znaleziono pliku.")
+    sys.exit(1)
+
 max_szer = max(len(w) for w in mapa)
 mapa = [w + [' '] * (max_szer - len(w)) for w in mapa]
 
+#mapka
+for wiersz in mapa:
+    print("".join(wiersz))
+    
+max_w = len(mapa) - 1
+max_k = max_szer - 1
+print(f"Maksymalny dozwolony wiersz: {max_w}")
+print(f"Maksymalna dozwolona kolumna: {max_k}")
+print(f"--------------------------")
+
+#input
+print("\nPodaj współrzędne w formacie: wiersz, kolumna (liczone od 0)")
+start_in = input("Współrzędne startowe: ").split(',')
+koniec_in = input("Współrzędne końcowe: ").split(',')
+
+start = (int(start_in[0].strip()), int(start_in[1].strip()))
+koniec = (int(koniec_in[0].strip()), int(koniec_in[1].strip()))
+
+algorytm = input("Rodzaj algorytmu (BFS / DFS): ").strip().upper()
+
+# Zmienne do przeszukiwania
 struktura = [start]
 odwiedzone = set()
 kroki = 0
 
+#glowna
 while struktura:
     y, x = struktura.pop() if algorytm == "DFS" else struktura.pop(0)
+    
+    if (y, x) in odwiedzone:
+        continue
+        
     odwiedzone.add((y, x))
     kroki += 1
 
-    print("\033[H\033[J", end="") 
+    # Rysowanie mapy w terminalu i kolorowanie pól
+    os.system('cls' if os.name == 'nt' else 'clear')
     for i, wiersz in enumerate(mapa):
         for j, znak in enumerate(wiersz):
             poz = (i, j)
@@ -52,10 +90,12 @@ while struktura:
     
     time.sleep(0.1) 
 
+    # koniec
     if (y, x) == koniec:
         print(f"\nZnaleziono ścieżkę! Ilość kroków: {kroki}")
         break
 
+    # sąsiedzi do sprawdzeniaa
     for dy, dx in RUCHY.get(mapa[y][x], []):
         ny, nx = y + dy, x + dx
         if 0 <= ny < len(mapa) and 0 <= nx < len(mapa[0]):
