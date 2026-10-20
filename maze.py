@@ -2,7 +2,7 @@ import sys
 import time
 import os
 
-#slownik ruchow
+# slownik ruchow
 RUCHY = {
     '\u253C': [(-1,0), (1,0), (0,-1), (0,1)], 
     '\u2502': [(-1,0), (1,0)],                
@@ -22,13 +22,13 @@ RUCHY = {
     '\u0020': []                              
 }
 
-#sciezka mapki
+# sciezka mapki
 if len(sys.argv) > 1:
     plik_mapy = sys.argv[1]
 else:
     plik_mapy = input("Podaj nazwę pliku z mapą (np. maze1.txt): ")
 
-#czytanie mapki
+# czytanie mapki
 try:
     with open(plik_mapy, 'r', encoding='utf-8') as f:
         mapa = [list(linia.strip('\n')) for linia in f]
@@ -39,7 +39,7 @@ except FileNotFoundError:
 max_szer = max(len(w) for w in mapa)
 mapa = [w + [' '] * (max_szer - len(w)) for w in mapa]
 
-#mapka
+# mapka
 for wiersz in mapa:
     print("".join(wiersz))
     
@@ -49,7 +49,7 @@ print(f"Maksymalny dozwolony wiersz: {max_w}")
 print(f"Maksymalna dozwolona kolumna: {max_k}")
 print(f"--------------------------")
 
-#input
+# input
 print("\nPodaj współrzędne w formacie: wiersz, kolumna (liczone od 0)")
 start_in = input("Współrzędne startowe: ").split(',')
 koniec_in = input("Współrzędne końcowe: ").split(',')
@@ -62,9 +62,10 @@ algorytm = input("Rodzaj algorytmu (BFS / DFS): ").strip().upper()
 # Zmienne do przeszukiwania
 struktura = [start]
 odwiedzone = set()
-kroki = 0
+# slownik krokow
+kroki = {start: 0} 
 
-#glowna
+# glowna
 while struktura:
     y, x = struktura.pop() if algorytm == "DFS" else struktura.pop(0)
     
@@ -72,9 +73,8 @@ while struktura:
         continue
         
     odwiedzone.add((y, x))
-    kroki += 1
 
-    # Rysowanie mapy w terminalu i kolorowanie pól
+    #mapa i kolorowanie
     os.system('cls' if os.name == 'nt' else 'clear')
     for i, wiersz in enumerate(mapa):
         for j, znak in enumerate(wiersz):
@@ -92,7 +92,8 @@ while struktura:
 
     # koniec
     if (y, x) == koniec:
-        print(f"\nZnaleziono ścieżkę! Ilość kroków: {kroki}")
+        #dystans out
+        print(f"\nZnaleziono ścieżkę! Ilość kroków: {kroki[(y, x)]}")
         break
 
     # sąsiedzi do sprawdzeniaa
@@ -101,5 +102,6 @@ while struktura:
         if 0 <= ny < len(mapa) and 0 <= nx < len(mapa[0]):
             if (ny, nx) not in odwiedzone and (ny, nx) not in struktura:
                 struktura.append((ny, nx))
+                kroki[(ny, nx)] = kroki[(y, x)] + 1
 else:
-    print(f"\nBrak ścieżki! Ilość kroków: {kroki}")
+    print(f"\nBrak ścieżki!")
