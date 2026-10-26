@@ -1,0 +1,256 @@
+{
+  "questions": {
+    "Q1": {
+      "text": "Co złego dzieje się z liśćmi rośliny?",
+      "answers": ["zolkna", "schna_koncowki", "opadaja", "brazowieja", "bledna"]
+    },
+    "Q2": {
+      "text": "Jaka jest obecnie ziemia w doniczce?",
+      "answers": ["mokra", "sucha", "lekko_wilgotna"]
+    },
+    "Q3": {
+      "text": "Ile światła dociera do rośliny?",
+      "answers": ["duzo_slonca", "polcien", "ciemno"]
+    },
+    "Q4": {
+      "text": "Czy doniczka ma dziurki odpływowe na spodzie?",
+      "answers": ["true", "false"]
+    },
+    "Q5": {
+      "text": "Czy roślina stoi blisko kaloryfera lub w przeciągu?",
+      "answers": ["true", "false"]
+    },
+    "Q6": {
+      "text": "Czy na liściach lub ziemi widać małe robaczki albo pajęczynki?",
+      "answers": ["true", "false"]
+    },
+    "Q7": {
+      "text": "Czy roślina była nawożona w ciągu ostatniego miesiąca?",
+      "answers": ["true", "false"]
+    },
+    "Q8": {
+      "text": "Czy roślina była przesadzana w ciągu ostatnich 2 lat?",
+      "answers": ["true", "false"]
+    },
+    "Q9": {
+      "text": "Jaki to typ rośliny?",
+      "answers": ["sukulent_kaktus", "paproc", "zwykla_doniczkowa"]
+    },
+    "Q10": {
+      "text": "Jak często podlewasz roślinę?",
+      "answers": ["codziennie", "raz_w_tygodniu", "rzadko"]
+    }
+  },
+  "rules": [
+    {
+      "if": {"Q1": "zolkna", "Q2": "mokra", "Q4": "false"},
+      "then": {
+        "diagnosis": "Gnicie korzeni przez brak odpływu nadmiaru wody",
+        "action": "Przesadź roślinę do doniczki z dziurkami na dnie i usuń zgniłe korzenie"
+      }
+    },
+    {
+      "if": {"Q1": "zolkna", "Q2": "mokra", "Q10": "codziennie"},
+      "then": {
+        "diagnosis": "Roślina jest przelana (zbyt częste podlewanie)",
+        "action": "Wstrzymaj podlewanie aż ziemia przeschnie i podlewaj rzadziej"
+      }
+    },
+    {
+      "if": {"Q1": "zolkna", "Q2": "mokra", "Q9": "sukulent_kaktus"},
+      "then": {
+        "diagnosis": "Sukulenty i kaktusy nie tolerują mokrej ziemi",
+        "action": "Wyjmij roślinę z mokrej ziemi, osusz korzenie i podlewaj dopiero gdy ziemia całkowicie wyschnie"
+      }
+    },
+    {
+      "if": {"Q1": "zolkna", "Q2": "sucha", "Q10": "rzadko"},
+      "then": {
+        "diagnosis": "Roślina usycha z braku wody",
+        "action": "Podlej obficie roślinę i ustaw przypomnienie o regularnym podlewaniu"
+      }
+    },
+    {
+      "if": {"Q1": "zolkna", "Q7": "false", "Q8": "false"},
+      "then": {
+        "diagnosis": "Wyjałowiona ziemia i brak składników odżywczych",
+        "action": "Przesadź roślinę do świeżej ziemi i zacznij stosować nawóz"
+      }
+    },
+    {
+      "if": {"Q1": "zolkna", "Q6": "true", "Q2": "lekko_wilgotna"},
+      "then": {
+        "diagnosis": "Atak szkodników (np. przędziorków lub wciornastków) osłabiający liście",
+        "action": "Umyj liście wodą z szarym mydłem i zastosuj oprysk na szkodniki"
+      }
+    },
+    {
+      "if": {"Q1": "schna_koncowki", "Q5": "true", "Q9": "paproc"},
+      "then": {
+        "diagnosis": "Zbyt suche powietrze od kaloryfera (paprocie lubią wilgoć)",
+        "action": "Przestaw paproć z dala od grzejnika i codziennie zraszaj jej liście wodą"
+      }
+    },
+    {
+      "if": {"Q1": "schna_koncowki", "Q5": "true", "Q9": "zwykla_doniczkowa"},
+      "then": {
+        "diagnosis": "Gorące powietrze z kaloryfera wysusza końcówki liści",
+        "action": "Odsuń roślinę od grzejnika lub postaw obok nawilżacz powietrza"
+      }
+    },
+    {
+      "if": {"Q1": "schna_koncowki", "Q2": "sucha", "Q3": "duzo_slonca"},
+      "then": {
+        "diagnosis": "Odwodnienie rośliny przez ostre słońce i suchą ziemię",
+        "action": "Podlej roślinę i przestaw ją w miejsce z rozproszonym światłem"
+      }
+    },
+    {
+      "if": {"Q1": "schna_koncowki", "Q7": "true", "Q2": "sucha"},
+      "then": {
+        "diagnosis": "Przenawożenie (spalenie korzeni nawozem podanym na suchą ziemię)",
+        "action": "Przepłucz ziemię dużą ilością czystej wody i wstrzymaj nawożenie na 2 miesiące"
+      }
+    },
+    {
+      "if": {"Q1": "schna_koncowki", "Q8": "false", "Q2": "sucha"},
+      "then": {
+        "diagnosis": "Zbyt mała doniczka – przerośnięte korzenie nie trzymają wody",
+        "action": "Przesadź roślinę do doniczki o rozmiar większej"
+      }
+    },
+    {
+      "if": {"Q1": "schna_koncowki", "Q6": "true", "Q5": "true"},
+      "then": {
+        "diagnosis": "Przędziorki (uwielbiają suche i ciepłe powietrze przy grzejniku)",
+        "action": "Zwiększ wilgotność powietrza i wykonaj oprysk preparatem na przędziorki"
+      }
+    },
+    {
+      "if": {"Q1": "opadaja", "Q5": "true", "Q3": "polcien"},
+      "then": {
+        "diagnosis": "Szok temperaturowy przez zimny przeciąg lub gorący kaloryfer",
+        "action": "Zapewnij roślinie stałą temperaturę z dala od otwieranych okien i grzejników"
+      }
+    },
+    {
+      "if": {"Q1": "opadaja", "Q3": "ciemno", "Q9": "zwykla_doniczkowa"},
+      "then": {
+        "diagnosis": "Roślina zrzuca liście, bo ma za mało światła do życia",
+        "action": "Przestaw roślinę bliżej okna lub zamontuj żarówkę do doświetlania"
+      }
+    },
+    {
+      "if": {"Q1": "opadaja", "Q2": "mokra", "Q3": "ciemno"},
+      "then": {
+        "diagnosis": "Połączenie braku światła i mokrej ziemi powoduje szybkie obumieranie",
+        "action": "Przestaw w jasne miejsce i nie podlewaj, dopóki ziemia nie przeschnie"
+      }
+    },
+    {
+      "if": {"Q1": "opadaja", "Q2": "sucha", "Q9": "paproc"},
+      "then": {
+        "diagnosis": "Przesuszenie bryły korzeniowej u paproci",
+        "action": "Wstaw doniczkę do miski z wodą na 15 minut, aby ziemia nasiąkła"
+      }
+    },
+    {
+      "if": {"Q1": "opadaja", "Q6": "true", "Q7": "false"},
+      "then": {
+        "diagnosis": "Osłabiona roślina zrzuca liście przez inwazję szkodników",
+        "action": "Oczyść liście ze szkodników, zastosuj oprysk, a po wyzdrowieniu delikatnie nawieź"
+      }
+    },
+    {
+      "if": {"Q1": "opadaja", "Q9": "sukulent_kaktus", "Q10": "codziennie"},
+      "then": {
+        "diagnosis": "Miękkie i odpadające liście u sukulenta to oznaka gnicia od nadmiaru wody",
+        "action": "Zaprzestań podlewania na minimum 2-3 tygodnie"
+      }
+    },
+    {
+      "if": {"Q1": "brazowieja", "Q3": "duzo_slonca", "Q9": "paproc"},
+      "then": {
+        "diagnosis": "Poparzenie słoneczne (paprocie nie znoszą bezpośredniego słońca)",
+        "action": "Przestaw paproć w półcień i obetnij spalone liście"
+      }
+    },
+    {
+      "if": {"Q1": "brazowieja", "Q3": "duzo_slonca", "Q9": "zwykla_doniczkowa"},
+      "then": {
+        "diagnosis": "Poparzenie liści przez ostre promienie słoneczne za szybą",
+        "action": "Odsuń roślinę o metr od okna południowego lub osłoń okno firanką"
+      }
+    },
+    {
+      "if": {"Q1": "brazowieja", "Q2": "mokra", "Q6": "true"},
+      "then": {
+        "diagnosis": "Ziemiórki (małe muszki w mokrej ziemi podgryzające korzenie)",
+        "action": "Przesusz podłoże, wystaw żółte lepy i podlej naparem z czosnku lub środkiem na ziemiórki"
+      }
+    },
+    {
+      "if": {"Q1": "brazowieja", "Q2": "mokra", "Q4": "true"},
+      "then": {
+        "diagnosis": "Choroba grzybowa wywołana ciągłą wilgocią mimo odpływu",
+        "action": "Usuń brązowe liście, wylewaj wodę z podstawki po podlaniu i użyj środka grzybobójczego"
+      }
+    },
+    {
+      "if": {"Q1": "brazowieja", "Q7": "true", "Q10": "codziennie"},
+      "then": {
+        "diagnosis": "Uszkodzenie korzeni przez zbyt częste podlewanie i nawożenie",
+        "action": "Wymień górną warstwę ziemi i podlewaj tylko czystą wodą raz w tygodniu"
+      }
+    },
+    {
+      "if": {"Q1": "brazowieja", "Q5": "true", "Q2": "sucha"},
+      "then": {
+        "diagnosis": "Skrajne przesuszenie ziemi i powietrza",
+        "action": "Podlej roślinę, obetnij suche brązowe części i odsuń od źródła ciepła"
+      }
+    },
+    {
+      "if": {"Q1": "bledna", "Q3": "ciemno", "Q9": "sukulent_kaktus"},
+      "then": {
+        "diagnosis": "Brak słońca – sukulent wyciąga się i blednie",
+        "action": "Postaw roślinę na najjaśniejszym parapecie (najlepiej południowym)"
+      }
+    },
+    {
+      "if": {"Q1": "bledna", "Q3": "ciemno", "Q9": "zwykla_doniczkowa"},
+      "then": {
+        "diagnosis": "Niedobór chlorofilu przez brak dostępu do światła dziennego",
+        "action": "Przenieś roślinę w jaśniejsze miejsce (półcień lub parapet)"
+      }
+    },
+    {
+      "if": {"Q1": "bledna", "Q7": "false", "Q2": "lekko_wilgotna"},
+      "then": {
+        "diagnosis": "Chloroza (brak żelaza i azotu w ziemi mimo dobrego podlewania)",
+        "action": "Zastosuj nawóz do roślin zielonych z mikroelementami"
+      }
+    },
+    {
+      "if": {"Q1": "bledna", "Q8": "false", "Q7": "false"},
+      "then": {
+        "diagnosis": "Stara, wyjałowiona ziemia nie dostarcza już żadnych minerałów",
+        "action": "Przesadź roślinę do nowej, żyznej ziemi uniwersalnej"
+      }
+    },
+    {
+      "if": {"Q1": "bledna", "Q3": "duzo_slonca", "Q2": "sucha"},
+      "then": {
+        "diagnosis": "Wyblaknięcie liści od nadmiaru ostrego słońca i braku wody",
+        "action": "Podlej roślinę i przestaw w nieco mniej nasłonecznione miejsce"
+      }
+    },
+    {
+      "if": {"Q1": "bledna", "Q6": "true", "Q3": "polcien"},
+      "then": {
+        "diagnosis": "Szkodniki wysysają soki z liści, przez co tracą one zielony kolor",
+        "action": "Przemyj liście i użyj domowego lub sklepowego oprysku na szkodniki"
+      }
+    }
+  ]
+}
