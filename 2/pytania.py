@@ -2,11 +2,11 @@ import json
 
 #plik json
 with open("pytania.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
+    data = json.load(f) #slownik
 
-questions = data["questions"]
+questions = data["questions"] #lista
 rules = data["rules"]
-user_answers = {}
+user_answers = {} 
 
 print("=== SYSTEM EKSPERCKI: ROŚLINY ===\n")
 
@@ -34,10 +34,11 @@ for rule in rules:
     if all(user_answers.get(k) == v for k, v in rule["if"].items()):
         matched_rules.append(rule)
 
-# 4. Wypisanie samej diagnozy
+#diagnoza
 print("=== WYNIKI DIAGNOZY ===")
 if matched_rules:
     for rule in matched_rules:
         print(f"- {rule['then']['diagnosis']}")
+        print(f"- {rule['then']['action']}")
 else:
     print("Brak pasujących reguł dla podanych odpowiedzi.")
